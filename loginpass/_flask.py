@@ -44,7 +44,10 @@ def create_flask_blueprint(backend, oauth, handle_authorize):
     def auth():
         id_token = request.args.get('id_token')
         if request.args.get('code'):
-            token = remote.authorize_access_token()
+            if backend.OAUTH_NAME == 'linkedin':
+                token = remote.authorize_access_token(client_secret=oauth.linkedin.client_secret)
+            else:
+                token = remote.authorize_access_token()
             if id_token:
                 token['id_token'] = id_token
         elif id_token:
