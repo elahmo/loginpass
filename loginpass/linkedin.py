@@ -31,7 +31,7 @@ class LinkedIn(OAuthBackend):
             'id', 'email-address', 'picture-url', 'public-profile-url',
             'formatted-name', 'first-name', 'last-name', 'maiden-name',
         ]
-        url = 'people/~:({})'.format(','.join(fields))
+        url = 'people/~:({})?format=json'.format(','.join(fields))
         resp = self.get(url, **kwargs)
         resp.raise_for_status()
         return UserInfo(map_profile_fields(resp.json(), {
